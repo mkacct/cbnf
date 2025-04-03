@@ -1,0 +1,35 @@
+// cBNF v1.0
+// Madeline Kahn, 2025
+
+<EOL> ::= (? system-defined line terminator ?) ;
+<S> ::= {(? any whitespace character ?) | <comment>}* ;
+
+<literal> ::= "\"" (? double-quoted string text ?) "\"" | "'" (? single-quoted string text ?) "'" ;
+
+<qty> ::= {"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}+ ;
+<desc-term-text> ::= (? any string not containing the desc-term initial or final sequences ?) ; // those sequences being "(?" and "?)"
+
+<comment> ::= <line-comment> | <block-comment> ;
+<line-comment> ::= "//" (? any string not containing LF or CR ?) <EOL> ;
+<block-comment> ::= "/*" (? any string not containing "*/" ?) "*/" ;
+
+// START:
+<syntax> ::= <S> {<rule> <S>}* <EOL> ;
+<rule> ::= <identifier> <S> <assignment-operator> <S> <expression> <S> ";" ;
+<assignment-operator> ::= "::=" | "::=|";
+
+<identifier> ::= "<" {<letter> | <digit> | "-"}+ ">" ;
+<letter> ::= (? any character used to represent words in a supported natural language ?) ;
+<digit> ::= (? any digit in a supported numeral system ?) ;
+
+<expression> ::= <alternation> | <exception> ;
+<alternation> ::= <concatenation> {<S> "|" <S> <concatenation>}* ;
+<concatenation> ::= <term> {<S> <term>}* ;
+<exception> ::= <term> <S> "-" <S> <term> ;
+<term> ::= <literal> | <identifier> | <group> | <quantification> | <desc-term> ;
+<group> ::= "(" <S> <expression> <S> ")" ;
+<quantification> ::= "{" <S> <expression> <S> "}" <S> <quantifier> ;
+<quantifier> ::= "?" | "*" | "+" | <numeric-quantifier> ;
+<numeric-quantifier> ::= "[" <S> (<qty> | <variable-qty>) <S> "]" ;
+<variable-qty> ::= <qty> <S> "," <S> {<qty>}? ;
+<desc-term> ::= "(?" <S> <desc-term-text> <S> "?)" ;
