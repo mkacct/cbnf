@@ -1,4 +1,4 @@
-// cBNF v1.0
+// cBNF v1.1
 // Madeline Kahn, 2025
 
 <EOL> ::= (? system-defined line terminator ?) ;

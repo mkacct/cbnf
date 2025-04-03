@@ -1,6 +1,6 @@
 # cBNF specification
 
-cBNF v1.0  
+cBNF v1.1  
 Madeline Kahn, 2025
 
 ## Rationale
@@ -123,4 +123,4 @@ A cBNF syntax may extend a preceding cBNF syntax in the following manners:
 <name> ::= "Maddie" ;
 ```
 
-It is invalid to use `::=|` to assign to an identifier that has not yet been defined.
+If used to assign to an identifier that has not yet been defined, `::=|` is equivalent to `::=`.
