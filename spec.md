@@ -15,7 +15,7 @@ A cBNF syntax consists of zero or more production **rules**. Optional whitespace
 
 A rule assigns an **expression** to an **identifier**. The standard assignment operator is `::=`. Each rule must be terminated by `;`.
 
-```
+```cbnf
 // Rule example:
 <greeting> ::= "Hello, world!" ;
 ```
@@ -24,7 +24,7 @@ A rule assigns an **expression** to an **identifier**. The standard assignment o
 
 A comment may start anywhere arbitrary whitespace is permitted. C-style line comments and block comments are both allowed.
 
-```
+```cbnf
 // line comment
 /* block comment
 on two lines */
@@ -42,7 +42,7 @@ An **identifier** (nonterminal symbol) is written as one or more identifier char
 
 An **expression** can usually be considered to be an alternation of one or more concatenations of one or more terms each. (The single other type of expression is the exception, described at the end of this section.) Alternatives are separated by `|`, and concatenation needs no operator.
 
-```
+```cbnf
 // Alternation example:
 <floor-label> ::= "Ground Floor" | "Floor " <positive-integer> ;
 ```
@@ -53,7 +53,7 @@ There are various types of terms that may be used in an expression. The **litera
 
 A **group** is a term consisting of any expression in parentheses. Groups are used to nest expressions within one another.
 
-```
+```cbnf
 // Group example:
 <example-domain> ::= "example." ("com" | "org" | "net") ;
 ```
@@ -69,7 +69,7 @@ A **quantification** is a term consisting of any expression in curly braces, fol
 * `[x,]` – `x` or more
 * `[x,y]` – Between `x` and `y` inclusive
 
-```
+```cbnf
 // Quantification examples:
 <decimal-number> ::= {"-"}? {<digit>}+ {"." {<digit>}+}? ;
 <markdown-header> ::= "#"[1,6] " " <markdown-text> ;
@@ -79,7 +79,7 @@ A **quantification** is a term consisting of any expression in curly braces, fol
 
 A **description** term consists of some text between `(?` and `?)`. In a usual cBNF syntax, the text is simply natural language describing what sequences satisfy the term. Since description terms are effectively an escape hatch from cBNF, they should be used with caution. In a cBNF syntax interpreted by software, _description terms may be prohibited or restricted to certain predefined values_.
 
-```
+```cbnf
 // Description example:
 <whitespace> ::= {(? any whitespace character ?)}+ ;
 ```
@@ -88,7 +88,7 @@ A **description** term consists of some text between `(?` and `?)`. In a usual c
 
 An **exception** is a special type of expression consisting of exactly two terms separated by a minus sign. It represents a set difference, and is satisfied by any sequence that satisfies the first term but does not satisfy the second term. _An exception is an expression, not a term, and must be parenthesized when used in a context expecting a term._
 
-```
+```cbnf
 // Exception examples:
 <non-zero-digit> ::= <digit> - "0" ;
 <non-zero-integer> ::= {"-"}? ({<digit>}+ - {"0"}+) ;
@@ -102,7 +102,7 @@ A cBNF syntax may extend a preceding cBNF syntax in the following manners:
 * A rule can redefine an identifier using the `::=` assignment operator again, overriding its previous definition.
 * A rule can append alternatives to an identifier's definition using the `::=|` assignment operator.
 
-```
+```cbnf
 // Extension demonstration:
 
 <fruit> ::= "apple" | "orange" ;
@@ -115,7 +115,7 @@ A cBNF syntax may extend a preceding cBNF syntax in the following manners:
 <name> ::= "Maddie" ;
 ```
 
-```
+```cbnf
 // The above syntax is equivalent to the following:
 
 <fruit> ::= "lemon" ;
