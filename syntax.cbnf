@@ -7,7 +7,7 @@
 <literal> ::= "\"" (? double-quoted string text ?) "\"" | "'" (? single-quoted string text ?) "'" ;
 
 <qty> ::= {"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}+ ;
-<desc-term-text> ::= (? any string not containing the desc-term initial or final sequences ?) ; // those sequences being "(?" and "?)"
+<desc-term-text> ::= (? any string not containing the desc-term initial or final sequences ?) ; // i.e. no "(?" or "?)"
 
 <comment> ::= <line-comment> | <block-comment> ;
 <line-comment> ::= "//" (? any string not containing LF or CR ?) <EOL> ;
